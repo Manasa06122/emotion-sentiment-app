@@ -1,0 +1,7 @@
+ID,Sentence,Timestamp,Emotions,Sentiment
+1,"Why did this happen to me, I feel so broken.",2025-05-02 04:30:06.641321,"sadness, confusion, remorse, grief, disappointment, curiosity",negative
+2,"Why did this happen to me, I feel so broken.",2025-05-02 04:31:03.558441,"sadness, confusion, remorse, grief, disappointment, curiosity",negative
+3,I am so happy and excited about my new job!,2025-05-02 04:33:22.296009,"excitement, optimism, joy",positive
+4,"I'm feeling really sad and alone lately.
+",2025-05-02 05:55:22.259982,"sadness, grief, remorse, disappointment",negative
+5,I'm not sure what to do anymore. Everything feels confusing.,2025-05-02 07:15:48.912951,confusion,neutral
