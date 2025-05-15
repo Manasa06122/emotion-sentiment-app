@@ -10,12 +10,12 @@ from datetime import datetime
 from typing import Optional
 import csv
 
-# ✅ Lightweight Emotion Classification Pipeline
-classifier = pipeline("text-classification", model="nateraw/bert-base-uncased-emotion", top_k=None)
+# Load emotion classification pipeline
+classifier = pipeline("text-classification", model="joeddav/distilbert-base-uncased-go-emotions-student", top_k=None)
 
 app = FastAPI()
 
-# --- CORS ---
+# CORS settings
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -24,7 +24,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- Database Setup ---
+# --- Database setup ---
 DATABASE_URL = "sqlite:///./emotion_history.db"
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(bind=engine)
@@ -44,7 +44,7 @@ Base.metadata.create_all(bind=engine)
 class InputText(BaseModel):
     text: str
 
-# --- Predict Endpoint ---
+# --- Predict endpoint ---
 @app.post("/predict")
 def predict_emotions(input: InputText):
     result = classifier(input.text)[0]
@@ -97,7 +97,7 @@ def predict_emotions(input: InputText):
         "sentiment_percent": sentiment_percent
     }
 
-# --- History Endpoint ---
+# --- Filtered history endpoint ---
 @app.get("/history")
 def get_history(sentiment: Optional[str] = Query(None)):
     db = SessionLocal()
@@ -115,7 +115,7 @@ def get_history(sentiment: Optional[str] = Query(None)):
         } for r in records
     ]
 
-# --- Export CSV Endpoint ---
+# --- Export all history to CSV ---
 @app.get("/export")
 def export_history():
     db = SessionLocal()
